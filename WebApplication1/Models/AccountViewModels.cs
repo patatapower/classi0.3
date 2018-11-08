@@ -45,7 +45,7 @@ namespace WebApplication1.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
-
+    // este modelo, sirve para dejar 
     public class LoginViewModel
     {
         [Required]

@@ -1,12 +1,79 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	/*background-image: url("~/images/back.jpg"); */
+	/*-webkit-background-size: cover;
+	//-moz-background-size: cover;*/
+	background-color: #cccccc;
+	overflow: auto;
 }
 
-/* Set padding to keep content from hitting the edges */
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	/*-o-background-size: cover;/*/
+}
+
+/* Carousel */
+.carousel-caption p {
+	font-size: 20px;
+	line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+	width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+	margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+	/* Hide captions */
+	.carousel-caption {
+		display: none;
+	}
+}
+
+
+.login-block {
+	background-color: rgba(240,248,255,0.2);
+	width: 40%;
+	padding: 25px 0 10px 35px;
+}
+
+#homeHeader {
+	background: url("Images/back2.jpg") no-repeat center fixed;
+	background-size: cover;
+	overflow: hidden
+}
+
+.homeHeader {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	width: 1000px;
+	overflow: hidden
+}
+
+.imgcard {
+	height: 100%;
+	width: 100%;
+}
+
+.transparent {
+	background-color: rgba(240,248,255,0.2);
+}
+
+.indexcardcenter {
+	align-items: center
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

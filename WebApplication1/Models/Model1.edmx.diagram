@@ -5,7 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6f453aa4679f4677b9c769d547a186b9" Name="Diagram1">
-        <EntityTypeShape EntityType="ClassiModel.Alumno" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClassiModel.Asistencia" Width="1.5" PointX="8.25" PointY="1.5" />
+        <EntityTypeShape EntityType="ClassiModel.Carrera" Width="1.5" PointX="3.75" PointY="2.875" />
+        <EntityTypeShape EntityType="ClassiModel.Materia" Width="1.5" PointX="6" PointY="2.5" />
+        <EntityTypeShape EntityType="ClassiModel.Profesore" Width="1.5" PointX="8.25" PointY="5.75" />
+        <EntityTypeShape EntityType="ClassiModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="ClassiModel.FK_Asistencia_Materias" />
+        <AssociationConnector Association="ClassiModel.FK_Materias_Carrera" />
+        <AssociationConnector Association="ClassiModel.FK_Profesores_Materias" />
+        <EntityTypeShape EntityType="ClassiModel.Alumno" Width="1.5" PointX="2.125" PointY="0.5" />
+        <AssociationConnector Association="ClassiModel.FK_Asistencia_Alumnos1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

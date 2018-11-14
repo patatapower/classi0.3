@@ -4,43 +4,331 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ClassiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ClassiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="IDalumno" />
+          </Key>
+          <Property Name="IDalumno" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="IDCarrera" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asistencia">
+          <Key>
+            <PropertyRef Name="IDasistencia" />
+          </Key>
+          <Property Name="IDasistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDmateria" Type="int" Nullable="false" />
+          <Property Name="IDalumno" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="Asistencia" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="IDcarrera" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesores">
           <Key>
             <PropertyRef Name="Legajo" />
           </Key>
           <Property Name="Legajo" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="IDmateria" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Asistencia_Alumnos1">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="1" />
+          <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="IDalumno" />
+            </Principal>
+            <Dependent Role="Asistencia">
+              <PropertyRef Name="IDalumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asistencia_Materias">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asistencia">
+              <PropertyRef Name="IDmateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materias_Carrera">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Materias" Type="Self.Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Materias">
+              <PropertyRef Name="IDcarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesores_Materias">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="IDmateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ClassiModelStoreContainer">
           <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asistencia" EntityType="Self.Asistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Asistencia_Alumnos1" Association="Self.FK_Asistencia_Alumnos1">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Asistencia" EntitySet="Asistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asistencia_Materias" Association="Self.FK_Asistencia_Materias">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Asistencia" EntitySet="Asistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materias_Carrera" Association="Self.FK_Materias_Carrera">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Materias" EntitySet="Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesores_Materias" Association="Self.FK_Profesores_Materias">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ClassiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Alumno">
+        <EntityContainer Name="ClassiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Asistencias" EntityType="ClassiModel.Asistencia" />
+          <EntitySet Name="Carreras" EntityType="ClassiModel.Carrera" />
+          <EntitySet Name="Materias" EntityType="ClassiModel.Materia" />
+          <EntitySet Name="Profesores" EntityType="ClassiModel.Profesore" />
+          <EntitySet Name="sysdiagrams" EntityType="ClassiModel.sysdiagram" />
+          <AssociationSet Name="FK_Asistencia_Materias" Association="ClassiModel.FK_Asistencia_Materias">
+            <End Role="Materia" EntitySet="Materias" />
+            <End Role="Asistencia" EntitySet="Asistencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materias_Carrera" Association="ClassiModel.FK_Materias_Carrera">
+            <End Role="Carrera" EntitySet="Carreras" />
+            <End Role="Materia" EntitySet="Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesores_Materias" Association="ClassiModel.FK_Profesores_Materias">
+            <End Role="Materia" EntitySet="Materias" />
+            <End Role="Profesore" EntitySet="Profesores" />
+          </AssociationSet>
+          <EntitySet Name="Alumnos" EntityType="ClassiModel.Alumno" />
+          <AssociationSet Name="FK_Asistencia_Alumnos1" Association="ClassiModel.FK_Asistencia_Alumnos1">
+            <End Role="Alumno" EntitySet="Alumnos" />
+            <End Role="Asistencia" EntitySet="Asistencias" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Asistencia">
+          <Key>
+            <PropertyRef Name="IDasistencia" />
+          </Key>
+          <Property Name="IDasistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDmateria" Type="Int32" Nullable="false" />
+          <Property Name="IDalumno" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="Asistencia1" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Materia" Relationship="ClassiModel.FK_Asistencia_Materias" FromRole="Asistencia" ToRole="Materia" />
+          <NavigationProperty Name="Alumno" Relationship="ClassiModel.FK_Asistencia_Alumnos1" FromRole="Asistencia" ToRole="Alumno" />
+        </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Materias" Relationship="ClassiModel.FK_Materias_Carrera" FromRole="Carrera" ToRole="Materia" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDcarrera" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asistencias" Relationship="ClassiModel.FK_Asistencia_Materias" FromRole="Materia" ToRole="Asistencia" />
+          <NavigationProperty Name="Carrera" Relationship="ClassiModel.FK_Materias_Carrera" FromRole="Materia" ToRole="Carrera" />
+          <NavigationProperty Name="Profesores" Relationship="ClassiModel.FK_Profesores_Materias" FromRole="Materia" ToRole="Profesore" />
+        </EntityType>
+        <EntityType Name="Profesore">
           <Key>
             <PropertyRef Name="Legajo" />
           </Key>
           <Property Name="Legajo" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDmateria" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Materia" Relationship="ClassiModel.FK_Profesores_Materias" FromRole="Profesore" ToRole="Materia" />
         </EntityType>
-        <EntityContainer Name="ClassiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Alumnos" EntityType="Self.Alumno" />
-        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Asistencia_Materias">
+          <End Type="ClassiModel.Materia" Role="Materia" Multiplicity="1" />
+          <End Type="ClassiModel.Asistencia" Role="Asistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asistencia">
+              <PropertyRef Name="IDmateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materias_Carrera">
+          <End Type="ClassiModel.Carrera" Role="Carrera" Multiplicity="1" />
+          <End Type="ClassiModel.Materia" Role="Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Materia">
+              <PropertyRef Name="IDcarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesores_Materias">
+          <End Type="ClassiModel.Materia" Role="Materia" Multiplicity="1" />
+          <End Type="ClassiModel.Profesore" Role="Profesore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profesore">
+              <PropertyRef Name="IDmateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="IDalumno" />
+          </Key>
+          <Property Name="IDalumno" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDCarrera" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asistencias" Relationship="ClassiModel.FK_Asistencia_Alumnos1" FromRole="Alumno" ToRole="Asistencia" />
+        </EntityType>
+        <Association Name="FK_Asistencia_Alumnos1">
+          <End Type="ClassiModel.Alumno" Role="Alumno" Multiplicity="1" />
+          <End Type="ClassiModel.Asistencia" Role="Asistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="IDalumno" />
+            </Principal>
+            <Dependent Role="Asistencia">
+              <PropertyRef Name="IDalumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ClassiModelStoreContainer" CdmEntityContainer="ClassiEntities">
+          <EntitySetMapping Name="Asistencias">
+            <EntityTypeMapping TypeName="ClassiModel.Asistencia">
+              <MappingFragment StoreEntitySet="Asistencia">
+                <ScalarProperty Name="Asistencia1" ColumnName="Asistencia" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="IDalumno" ColumnName="IDalumno" />
+                <ScalarProperty Name="IDmateria" ColumnName="IDmateria" />
+                <ScalarProperty Name="IDasistencia" ColumnName="IDasistencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carreras">
+            <EntityTypeMapping TypeName="ClassiModel.Carrera">
+              <MappingFragment StoreEntitySet="Carrera">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="ClassiModel.Materia">
+              <MappingFragment StoreEntitySet="Materias">
+                <ScalarProperty Name="IDcarrera" ColumnName="IDcarrera" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesores">
+            <EntityTypeMapping TypeName="ClassiModel.Profesore">
+              <MappingFragment StoreEntitySet="Profesores">
+                <ScalarProperty Name="IDmateria" ColumnName="IDmateria" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ClassiModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Alumnos">
             <EntityTypeMapping TypeName="ClassiModel.Alumno">
               <MappingFragment StoreEntitySet="Alumnos">
-                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="IDCarrera" ColumnName="IDCarrera" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IDalumno" ColumnName="IDalumno" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

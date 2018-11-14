@@ -12,20 +12,23 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Alumno
+    public partial class Materia
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Alumno()
+        public Materia()
         {
             this.Asistencias = new HashSet<Asistencia>();
+            this.Profesores = new HashSet<Profesore>();
         }
     
-        public int IDalumno { get; set; }
+        public int ID { get; set; }
         public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public int IDCarrera { get; set; }
+        public int IDcarrera { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asistencia> Asistencias { get; set; }
+        public virtual Carrera Carrera { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Profesore> Profesores { get; set; }
     }
 }

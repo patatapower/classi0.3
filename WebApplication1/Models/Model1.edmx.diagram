@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6f453aa4679f4677b9c769d547a186b9" Name="Diagram1">
+      <Diagram DiagramId="6f453aa4679f4677b9c769d547a186b9" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="ClassiModel.Asistencia" Width="1.5" PointX="8.25" PointY="1.5" />
         <EntityTypeShape EntityType="ClassiModel.Carrera" Width="1.5" PointX="3.75" PointY="2.875" />
         <EntityTypeShape EntityType="ClassiModel.Materia" Width="1.5" PointX="6" PointY="2.5" />
@@ -13,7 +13,7 @@
         <AssociationConnector Association="ClassiModel.FK_Asistencia_Materias" />
         <AssociationConnector Association="ClassiModel.FK_Materias_Carrera" />
         <AssociationConnector Association="ClassiModel.FK_Profesores_Materias" />
-        <EntityTypeShape EntityType="ClassiModel.Alumno" Width="1.5" PointX="2.125" PointY="0.5" />
+        <EntityTypeShape EntityType="ClassiModel.Alumno" Width="1.5" PointX="1.25" PointY="0.5" />
         <AssociationConnector Association="ClassiModel.FK_Asistencia_Alumnos1" />
       </Diagram>
     </edmx:Diagrams>
